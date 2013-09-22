@@ -1,5 +1,6 @@
-{one line to give the program's name and a brief idea of what it does.}
-    Copyright (C) {year}  {name of author}
+/**
+	SDLib.js a JavaScript Library.
+    Copyright (C) 2013  Saurin Dashadia
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -13,10 +14,49 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see [http://www.gnu.org/licenses/].
+ */
+
+
+	var SDLib={
+		Canvas:function(element,dimension="2d"){
+			var _context=element.getContext(dimension);
+			
+			return {
+				//canvas	: 	element,
+				context		:	_context,
+				
+				// line object
+				line:function(args){
+					_color=(args.color)?args.color:'#000';
+					
+					return{
+						start	:	args.start,
+						end		:	args.end,
+						color	:	_color,
+						
+						draw:function(){
+							_context.strokeStyle=this.color;
+							_context.beginPath();
+							_context.moveTo(this.start[0],this.start[1]);
+							_context.lineTo(this.end[0],this.end[1]);
+							_context.stroke();
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	window.onload=function(){
+		var element=document.getElementById("SDCanvas");
+		var canvas1= new SDLib.Canvas(element,'2d');
+		var ss=canvas1.line({start:[0,0],end:[200,200],color:'#FF0000'});//.draw();
+		ss.color='#00FF00';
+		ss.draw();
+		console.log(ss)
+	};
     
-    
-    
-    window.onload=function(){
+    /*window.onload=function(){
 	(function(D){
 		// create SD object
 		var SD={
@@ -93,4 +133,4 @@
 		
 		SD.init();
 	})(document);
-}
+}*/
