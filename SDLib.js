@@ -18,28 +18,43 @@
 
 
 	var SDLib={
-		Canvas:function(element,dimension="2d"){
-			var _context=element.getContext(dimension);
+		Canvas : function(element,dimension="2d"){
+			var _context = element.getContext(dimension);
 			
 			return {
 				//canvas	: 	element,
-				context		:	_context,
+				context	: _context,
 				
 				// line object
-				line:function(args){
-					_color=(args.color)?args.color:'#000';
+				line : function(args){
+					_color	= (args.color) ? args.color : '#000000';
+					_start	= (args.start) ? args.start : [0,0];
+					_end	= (args.end) ? args.end : [0,0];
+					_width	= (args.width) ? args.width : 1; 
 					
 					return{
-						start	:	args.start,
-						end		:	args.end,
+						start	:	_start,
+						end		:	_end,
 						color	:	_color,
+						width	:	_width,
 						
-						draw:function(){
-							_context.strokeStyle=this.color;
+						setPos : function(args){
+							this.start = (args.start) ? args.start : this.start;
+							this.end = (args.end) ? args.end : this.end;
+						},
+						
+						setColor : function(clr){
+							this.color = (clr) ? clr : this.color;
+						},
+						
+						draw : function(){
+							_context.strokeStyle = this.color;
 							_context.beginPath();
 							_context.moveTo(this.start[0],this.start[1]);
 							_context.lineTo(this.end[0],this.end[1]);
 							_context.stroke();
+							
+							//return this;
 						}
 					}
 				}
@@ -50,8 +65,12 @@
 	window.onload=function(){
 		var element=document.getElementById("SDCanvas");
 		var canvas1= new SDLib.Canvas(element,'2d');
-		var ss=canvas1.line({start:[0,0],end:[200,200],color:'#FF0000'});//.draw();
-		ss.color='#00FF00';
+		console.log(canvas1);
+		var ss=canvas1.line({start:[0,0],end:[200,200],color:'#FF0000'})//.draw();
+		ss.draw();
+		console.log(ss);
+		ss.setPos({start:[100,100],end:[200,200]});
+		ss.setColor('blue');
 		ss.draw();
 		console.log(ss)
 	};
