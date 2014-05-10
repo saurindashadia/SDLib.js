@@ -18,12 +18,38 @@
 
 
 	var SDLib={
-		Canvas : function(element,dimension="2d"){
-			var _context = element.getContext(dimension);
-			
+        /**
+         *
+         * @param element       An HTML canvas element
+         * @param dimension     Rendering context
+         * @returns {*}
+         * @constructor
+         */
+        Canvas : function(element, dimension){
+            // check for element
+            if(!element || element.nodeName != "CANVAS"){
+                console.log('SDLib: Element is not canvas.');
+                return false;
+            }
+
+            // set default dimension
+            if(!dimension)  dimension = "2d";
+
+            // check browser support for canvas
+            if(element.getContext){
+                // global canvas context
+                var _context = element.getContext(dimension);
+            }else{
+                console.log('SDLib: Canvas not supported by browser.')
+                return false;
+            }
+
 			return {
-				//canvas	: 	element,
 				context	: _context,
+
+                Rect:function(){
+
+                },
 				
 				// line object
 				line : function(args){
@@ -61,95 +87,3 @@
 			}
 		}
 	}
-	
-	window.onload=function(){
-		var element=document.getElementById("SDCanvas");
-		var canvas1= new SDLib.Canvas(element,'2d');
-		console.log(canvas1);
-		var ss=canvas1.line({start:[0,0],end:[200,200],color:'#FF0000'})//.draw();
-		ss.draw();
-		console.log(ss);
-		ss.setPos({start:[100,100],end:[200,200]});
-		ss.setColor('blue');
-		ss.draw();
-		console.log(ss)
-	};
-    
-    /*window.onload=function(){
-	(function(D){
-		// create SD object
-		var SD={
-			canvas		: 	null,
-			canHeight	:	null,
-			canWidth	:	null,
-			context		:	null,
-			
-			// line object
-			line:function(x1,y1,x2,y2,c=null){
-				c=(c)?c:'#000';
-				return{
-					startX	:	x1,
-					startY	:	y1,
-					endX	:	x2,
-					endY	:	y2,
-					color	:	c,
-					
-					draw:function(that){console.log(Object.parentNode);
-						that.context.strokeStyle=this.color;
-						//that.context.beginPath();
-						that.context.moveTo(this.startX,this.startY);
-						that.context.lineTo(this.endX,this.endY);
-						that.context.stroke();
-					}
-				}
-			},
-			
-			images		:	[{src:"assets/images/dell.png"}],
-			
-			// Initiate Environment
-			init:function(){
-				this.canvas		=	D.getElementById("SDCanvas");
-				this.canHeight	=	D.getElementById("SDCanvas").height;
-				this.canWidth	=	D.getElementById("SDCanvas").width;
-				
-				this.context		=	this.canvas.getContext("2d");
-				
-				this.hGrid();
-				//render images
-				//this.render();
-			},
-			
-			// sets background
-			setBackground:function(){
-				
-			},
-			
-			hGrid:function(){
-				var line=new this.line(0,0,200,200);
-				//line.color="gold";
-				console.log(line);
-				line.draw(this);
-				
-			},
-			
-			// sets image to appropriate position
-			render:function(){
-				that=this;
-				tmpimg =new Image();
-				tmpimg.src="assets/images/dell.png";
-				tmpimg.height=100;
-				tmpimg.width=100;
-				console.log(tmpimg);
-
-				
-				that.context.drawImage(tmpimg,0,0,256,256);
-				tmpimg.onload = function(){
-					
-				};
-				
-			}
-		};
-		
-		SD.init();
-	})(document);
-}*/
