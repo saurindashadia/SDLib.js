@@ -11,8 +11,23 @@
                 if(!canvas1) alert('Your browser doesn\'t support canvas element.');
 
                 console.log(canvas1);
-                canvas1.context.fillStyle='#f00';
-                canvas1.context.fillRect(0,0,100,100);
+                var rect1 = canvas1.Rect({
+                    top:40,
+                    left:40,
+                    width:50,
+                    height:50,
+                    backgroundColor:'yellow'
+                });
+                rect1.Fill();
+
+                canvas1.Rect({
+                    top:10,
+                    left:10,
+                    width:50,
+                    height:50,
+                    backgroundColor:'red'
+                }).Strock();
+
                 /*var ss=canvas1.line({start:[0,0],end:[200,200],color:'#FF0000'})//.draw();
                  ss.draw();
                  console.log(ss);
