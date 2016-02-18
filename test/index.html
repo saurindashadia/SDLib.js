@@ -5,36 +5,38 @@
 		<title>SDLib</title>
 		<script type="text/javascript" src="../SDLib.js"></script>
         <script>
-            window.onload=function(){
+            window.onload = function(){
                 var element=document.getElementById("SDCanvas");
-                var canvas1= new SDLib.Canvas(element,'2d');
-                if(!canvas1) alert('Your browser doesn\'t support canvas element.');
 
-                console.log(canvas1);
-                var rect1 = canvas1.Rect({
-                    top:40,
-                    left:40,
-                    width:50,
-                    height:50,
-                    backgroundColor:'yellow'
+                var canvas1= new SDLib.Canvas(element,'2d', function(errCode, errMsg){
+                    alert('Your browser doesn\'t support canvas element.');
+                });
+
+                element.style.border = "1px solid black";
+
+
+
+                var rand1 = parseInt(Math.random() * 100);
+                var rand2 = parseInt(Math.random() * 100);
+                rect1 = canvas1.Rect({
+                    top:4*rand1,
+                    left:40*rand1,
+                    width:5*rand1,
+                    height:5*rand1,
+                    backgroundColor:'blue'
                 });
                 rect1.Fill();
 
-                canvas1.Rect({
-                    top:10,
-                    left:10,
-                    width:50,
-                    height:50,
-                    backgroundColor:'red'
-                }).Strock();
-
-                /*var ss=canvas1.line({start:[0,0],end:[200,200],color:'#FF0000'})//.draw();
-                 ss.draw();
-                 console.log(ss);
-                 ss.setPos({start:[100,100],end:[200,200]});
-                 ss.setColor('blue');
-                 ss.draw();
-                 console.log(ss)*/
+                rect2 = canvas1.Rect({
+                    top:1*rand2,
+                    left:1*rand2,
+                    width:5*rand2,
+                    height:5*rand2,
+                    backgroundColor:'red',
+                    borderWidth:5
+                });
+                rect2.Fill();
+                rect2.Strock();
             };
         </script>
 	</head>
