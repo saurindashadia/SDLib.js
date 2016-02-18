@@ -25,10 +25,11 @@ var SDLib = {
      * @returns {*}
      * @constructor
      */
-    Canvas: function (element, dimension) {
+    Canvas: function (element, dimension, errfn) {
         // check for element
         if (!element || element.nodeName != "CANVAS") {
-            console.log('SDLib: Element is not canvas.');
+            errfn('1', 'Element is not canvas.');
+
             return false;
         }
 
@@ -36,11 +37,12 @@ var SDLib = {
         if (!dimension)  dimension = "2d";
 
         // check browser support for canvas
-        if (element.getContext) {
+        if (element.getContext !== undefined) {
             // global canvas context
             var _context = element.getContext(dimension);
         } else {
-            console.log('SDLib: Canvas not supported by browser.')
+            errfn('2', 'Canvas not supported by browser.');
+
             return false;
         }
 
@@ -67,9 +69,9 @@ var SDLib = {
                 _height         = args.height           || 0;
                 _width          = args.width            || 0;
 
-                _fillStyle      = args.backgroundColor  || '#000000';
-                _strokeStyle    = args.borderColor      || '#000000';
-                _lineWidth      = args.borderWidth      || 1;
+                _fillStyle      = args.backgroundColor;
+                _strokeStyle    = args.borderColor;
+                _lineWidth      = args.borderWidth;
 
                 return {
                     Fill: function () {
